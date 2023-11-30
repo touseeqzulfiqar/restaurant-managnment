@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AppVue from '@/App.vue'
+// import AppVue from '@/App.vue'
 import { defineComponent } from '@vue/composition-api'
 import axios from 'axios'
 import HeaderComp from './HeaderComp.vue'
@@ -24,18 +24,24 @@ export default defineComponent({
         HeaderComp,
     },
     methods:{
-        async updateRes(){
-            const result= await axios.put(AppVue.methods.loadurl() + "/resturant/" + this.$route.params.id,{
-                name:this.resturant.name,
-                address:this.resturant.address,
-                contact:this.resturant.contact
-            });
-            if(result.status==200)
-            {
-                this.$router.push({name:'HomeComp'});
-            }
-            console.warn("result:", result)
+        async updateRes() {
+    try {
+        const result = await axios.put(`http://localhost:8000/api/update-res/${this.$route.params.id}`, {
+            name: this.resturant.name,
+            address: this.resturant.address,
+            contact: this.resturant.contact
+        });
+
+        if (result.status === 200) {
+            this.$router.push({ name: 'HomeComp' });
         }
+
+        console.log('Result:', result);
+    } catch (error) {
+        console.error('Error updating resource:', error);
+    }
+}
+
     },
     data(){
         return{
@@ -52,7 +58,7 @@ let user=localStorage.getItem("User info");
 if(!user){
  this.$router.push({name:'SignUp'})   
 }
-const result = await axios.get("http://localhost:3000/resturant/"+this.$route.params.id);
+const result = await axios.get("http://localhost:8000/api/show-update-res/"+this.$route.params.id);
 console.log(result),
 this.resturant= result.data
 // console.warn(this.$route.params.id)

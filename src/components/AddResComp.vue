@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AppVue from "@/App.vue";
+// import AppVue from "@/App.vue";
 import { defineComponent } from "@vue/composition-api";
 import axios from "axios";
 import HeaderComp from "./HeaderComp.vue";
@@ -47,7 +47,7 @@ export default defineComponent({
   },
   methods: {
     async addRes() {
-      const result = await axios.post(AppVue.methods.loadurl() + "/resturant", {
+      const result = await axios.post("http://localhost:8000/api/post-res", {
         name: this.resturant.name,
         address: this.resturant.address,
         contact: this.resturant.contact,

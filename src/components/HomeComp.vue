@@ -4,7 +4,7 @@
     <h1>{{ name }} ,Welcome to home page</h1>
     <!-- <h1>{{$store.state.Abc}}</h1> -->
 
-    <table border="1px">
+    <table >
       <tr>
         <td>ID</td>
         <td>Name</td>
@@ -18,8 +18,8 @@
         <td>{{ item.address }}</td>
         <td>{{ item.contact }}</td>
         <td>
-          <router-link :to="'/update/' + item.id">Update</router-link>
-          <button v-on:click="deleteRes(item.id)">Delete</button>
+          <router-link :to="'/update/' + item.id" id="home_update_btn">Update</router-link>
+          <button v-on:click="deleteRes(item.id)" id="home_dell_btn">Delete</button>
         </td>
       </tr>
     </table>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AppVue from "@/App.vue";
+// import AppVue from "@/App.vue";
 // import store from "@/store/index.js";
 import { defineComponent } from "@vue/composition-api";
 import axios from "axios";
@@ -36,7 +36,8 @@ export default defineComponent({
   name: "HomeComp",
   methods: {
     async deleteRes(id) {
-      let result = await axios.delete(AppVue.methods.loadurl()+"/resturant/" + id);
+      // console.log(id)
+      let result = await axios.delete(`http://localhost:8000/api/dell-res/${id}`);
       if (result.status == 200) {
         this.loadData();
       }
@@ -53,7 +54,7 @@ export default defineComponent({
          console.log('loadData', user);
         this.$router.push({ name: "SignUp" });
       }
-      let result = await axios.get(AppVue.methods.loadurl()+"/resturant");
+      let result = await axios.get("http://localhost:8000/api/show-res");
       this.resturant = result.data;
     },
   },
@@ -80,5 +81,27 @@ export default defineComponent({
 td {
   width: 160px;
   height: 40px;
+}
+#home_dell_btn{
+  width: 120px;
+    height: 35px;
+    color: white;
+    background: #d9cf43;
+    border: 1px solid white;
+    cursor: pointer;
+    font-size: medium;
+}
+#home_update_btn{
+  text-decoration: none;
+  /* width: 120px;
+    height: 25px; */
+    padding-top: 10px;
+    color: white;
+    background: #d9cf43;
+    border: 1px solid white;
+    cursor: pointer;
+    padding-right: 36px;
+    padding-left: 30px;
+    
 }
 </style>
