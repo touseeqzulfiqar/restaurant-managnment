@@ -60,7 +60,7 @@ export default defineComponent({
   },
   mounted() {
     console.warn("Mounted");
-    let user = localStorage.getItem("User info");
+    let user = localStorage.getItem("User_info");
     if (!user) {
       this.$router.push({ name: "SignUp" });
     }
